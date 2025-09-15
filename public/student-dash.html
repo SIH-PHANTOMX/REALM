@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">REAL<span>M</span></h2>
+      <nav>
+        <ul>
+          <li class="active"><i class="fas fa-home"></i> Dashboard</li>
+          <li><i class="fas fa-users"></i> Alumni Network</li>
+          <li><i class="fas fa-calendar-alt"></i> Events</li>
+          <li><i class="fas fa-chalkboard-teacher"></i> Mentorship</li>
+          <li><i class="fas fa-book"></i> Articles</li>
+          <li><i class="fas fa-question-circle"></i> Q&A Board</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header>
+        <input type="text" placeholder="Search alumni, events, articles..." />
+        <button class="search-btn">Search</button>
+        <div class="profile">
+          <i class="fas fa-bell"></i><span class="notif">2</span>
+          <button class="profile-btn">ST</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <h1>Student Dashboard</h1>
+        <div class="stats">
+          <div class="card">
+            <h3>3</h3>
+            <p>Mentorship Sessions</p>
+          </div>
+          <div class="card">
+            <h3>8</h3>
+            <p>Events Registered</p>
+          </div>
+          <div class="card">
+            <h3>12</h3>
+            <p>Questions Asked</p>
+          </div>
+        </div>
+
+        <div class="achievements">
+          <h2>Achievements</h2>
+          <ul>
+            <li><i class="fas fa-medal"></i> Active Community Member</li>
+            <li><i class="fas fa-star"></i> Top Question Contributor</li>
+            <li><i class="fas fa-handshake"></i> Mentorship Participant</li>
+          </ul>
+        </div>
+
+        <div class="quick-actions">
+          <h2>Quick Actions</h2>
+          <div class="actions-grid">
+            <div class="action-card">
+              <i class="fas fa-users"></i>
+              <h3>Connect with Alumni</h3>
+              <p>Browse verified alumni profiles and connect with professionals in your field.</p>
+            </div>
+            <div class="action-card">
+              <i class="fas fa-calendar"></i>
+              <h3>Join Events</h3>
+              <p>Participate in workshops, webinars, and networking events hosted by alumni.</p>
+            </div>
+            <div class="action-card">
+              <i class="fas fa-question"></i>
+              <h3>Ask Questions</h3>
+              <p>Get answers from experienced alumni on career, academics, and industry insights.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
