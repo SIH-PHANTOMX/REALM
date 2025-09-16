@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">REAL<span>M</span></h2>
+      <nav>
+        <ul>
+          <li class="active"><i class="fas fa-home"></i> Dashboard</li>
+          <li><i class="fas fa-users-cog"></i> Manage Users</li>
+          <li><i class="fas fa-database"></i> System Logs</li>
+          <li><i class="fas fa-cogs"></i> Settings</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header>
+        <input type="text" placeholder="Search system, logs..." />
+        <button class="search-btn">Search</button>
+        <div class="profile">
+          <i class="fas fa-bell"></i><span class="notif">3</span>
+          <button class="profile-btn">AD</button>
+          <!-- ✅ Logout button -->
+          <button id="logoutBtn" class="logout-btn">Logout</button>
+        </div>
+      </header>
+
+      <section class="dashboard">
+        <h1>Admin Dashboard</h1>
+        <div class="stats">
+          <div class="card">
+            <h2>System Overview</h2>
+            <p>250 Active Users</p>
+            <p>98% Server Uptime</p>
+          </div>
+          <div class="card">
+            <h2>Recent Logs</h2>
+            <p>3 New Reports Today</p>
+            <p>5 Accounts Flagged</p>
+          </div>
+          <div class="card">
+            <h2>Admin Tools</h2>
+            <button class="primary-btn">Manage Users</button>
+            <button class="secondary-btn">System Logs</button>
+            <button class="secondary-btn">Settings</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Protect Dashboard -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = localStorage.getItem("authToken");
+      const role = localStorage.getItem("userRole");
+      if (!token || role !== "admin") {
+        window.location.href = "/testlogin5updated.html";
+      }
+    });
+  </script>
+
+  <!-- Logout Button -->
+  <script>
+    document.getElementById("logoutBtn")?.addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "/testlogin5updated.html";
+    });
+  </script>
+</body>
+</html>

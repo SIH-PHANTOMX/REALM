@@ -70,14 +70,96 @@ class RealmAuth {
     localStorage.removeItem("userId");
   }
 
-  redirectToDashboard(role) {
-  const dashboardUrls = {
-    student: "/student-dashboard.html",   // ✅ your student page
-    alumni: "/alumni-dashboard.html",     // ✅ your alumni page
-    admin: "/REALM(ADMIN).html",
-  };
-  window.location.href = dashboardUrls[role] || "/dashboard.html";
+  // ✅ LOGIN
+// ✅ LOGIN
+async handleLogin(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  try {
+    const res = await fetch(`${this.apiBaseUrl}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("✅ Login successful: " + data.user.email);
+
+      // Save token & role
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userRole", data.user.role);
+      localStorage.setItem("userId", data.user.id);
+
+      // ✅ Redirect based on role
+      if (data.user.role === "student") {
+        window.location.href = "/student-dashboard.html";
+      } else if (data.user.role === "alumni") {
+        window.location.href = "/alumni-dashboard.html";
+      } else if (data.user.role === "admin") {
+        window.location.href = "/admin-dashboard.html";
+      } else {
+        window.location.href = "/dashboard.html";
+      }
+    } else {
+      alert("❌ Login failed: " + data.message);
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+  }
 }
+
+
+// ✅ SIGNUP
+// ✅ SIGNUP
+async handleSignup(event) {
+  event.preventDefault();
+
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const role = document.querySelector('input[name="role"]:checked')?.value;
+
+  const name = `${firstName} ${lastName}`;
+
+  try {
+    const res = await fetch(`${this.apiBaseUrl}/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, role }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("✅ Signup successful: " + data.user.email);
+
+      // Save token & role
+      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("userRole", data.user.role);
+      localStorage.setItem("userId", data.user.id);
+
+      // ✅ Redirect based on role
+      if (data.user.role === "student") {
+        window.location.href = "/student-dashboard.html";
+      } else if (data.user.role === "alumni") {
+        window.location.href = "/alumni-dashboard.html";
+      } else if (data.user.role === "admin") {
+        window.location.href = "/admin-dashboard.html";
+      } else {
+        window.location.href = "/dashboard.html";
+      }
+    } else {
+      alert("❌ Signup failed: " + data.message);
+    }
+  } catch (err) {
+    console.error("Signup error:", err);
+  }
+}
+
 
 
   setupPasswordToggles() {
@@ -142,86 +224,6 @@ class RealmAuth {
     this.hideMessage();
     this.clearErrors();
   }
-
-  // ✅ LOGIN
-  async handleLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value;
-
-    try {
-      const res = await fetch(`${this.apiBaseUrl}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("✅ Login successful: " + data.user.email);
-
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("userRole", data.user.role);
-        localStorage.setItem("userId", data.user.id);
-
-        if (data.user.role === "alumni") {
-          window.location.href = "/realm(alm3).html";
-        } else if (data.user.role === "student") {
-          window.location.href = "/realm(std2).html";
-        } else {
-          window.location.href = "/dashboard.html";
-        }
-      } else {
-        alert("❌ Login failed: " + data.message);
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-    }
-  }
-
-  // ✅ SIGNUP
-  async handleSignup(event) {
-    event.preventDefault();
-
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("signupEmail").value.trim();
-    const password = document.getElementById("signupPassword").value;
-    const role = document.querySelector('input[name="role"]:checked')?.value;
-
-    const name = `${firstName} ${lastName}`;
-
-    try {
-      const res = await fetch(`${this.apiBaseUrl}/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("✅ Signup successful: " + data.user.email);
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("userRole", data.user.role);
-        localStorage.setItem("userId", data.user.id);
-
-        if (data.user.role === "alumni") {
-          window.location.href = "/realm(alm3).html";
-        } else if (data.user.role === "student") {
-          window.location.href = "/realm(std2).html";
-        } else {
-          window.location.href = "/dashboard.html";
-        }
-      } else {
-        alert("❌ Signup failed: " + data.message);
-      }
-    } catch (err) {
-      console.error("Signup error:", err);
-    }
-  }
-  // ---------- Part 2 (rest of RealmAuth) ----------
-  // continue inside the same <script> where Part 1 ended
-  // (do not create a new class; this is the continuation)
 
   async handleAdminLogin(e) {
     e.preventDefault();

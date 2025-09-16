@@ -6,7 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const path = require("path");   // ✅ added
+const path = require("path");
 
 dotenv.config();
 
@@ -15,8 +15,11 @@ const app = express();
 // Middleware
 app.use(express.json()); // parses JSON body
 app.use(cors());
+app.use(express.static("public"));
 
-// ✅ Serve static frontend files from "public" folder
+
+// ✅ Serve static frontend files
+
 app.use(express.static(path.join(__dirname, "public")));
 
 // Connect DB
@@ -31,14 +34,14 @@ mongoose
 // Routes
 app.use("/api/auth", require("./src/routes/auth"));
 
-// ✅ Serve index page if someone visits root "/"
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "testlogin5updated.html"));
+// ✅ For any unknown API routes
+app.use("/api/*", (req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
 
-// Fallback if route not found
-app.use((req, res) => {
-  res.status(404).json({ message: "Route not found" });
+// ✅ For non-API routes, serve frontend (fallback to index or custom)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "testlogin5updated.html"));
 });
 
 // Start server
